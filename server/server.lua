@@ -54,6 +54,16 @@ local function CheckCooldown(source, category, robberyId)
     local playerCooldown = cooldowns[license] or 0
     local robberyCooldown = cooldowns[robberyId] or 0
 
+    if playerCooldown <= currentTime then
+        cooldowns[license] = nil
+    end
+    if robberyCooldown <= currentTime then
+        cooldowns[robberyId] = nil
+    end
+    if next(cooldowns) == nil then
+        CD[category] = nil
+    end
+
     if playerCooldown > currentTime then
         return true, "player", playerCooldown - currentTime
     elseif robberyCooldown > currentTime then
